@@ -1,7 +1,9 @@
 const Grid = (() => {
   const grid = {
     view: 'datatable',
+    id: 'studentGrid',
     scrollY: true,
+    hidden: true,
     height: 700,
     minHeight: 400,
     select: 'row',
@@ -107,8 +109,5 @@ const Grid = (() => {
     ],
   };
 
-  const initUI = () => {
-    return webix.ui(grid);
-  };
-  return { initUI };
+  return { grid };
 })();

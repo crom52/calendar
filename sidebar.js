@@ -1,19 +1,30 @@
-const SideBar = (() => {
+const Sidebar = (() => {
   const sidebar = {
     view: 'sidebar',
-    width: 200,
     data: [
-      { id: 1, icon: 'mdi mdi-view-dashboard', value: 'Danh sách học sinh' },
-      { id: 2, icon: 'mdi mdi-view-column', value: 'Thời Khóa Biểu' },
+      {
+        id: 'calendar',
+        icon: 'mdi mdi-view-dashboard',
+        value: 'Thời khóa biểu',
+      },
+      {
+        id: 'studentGrid',
+        icon: 'mdi mdi-view-column',
+        value: 'Danh sách học sinh',
+      },
     ],
+    id: 'sidebar',
     on: {
-      onItemClick: function (id) {
-        var item = this.getItem(id);
+      onAfterSelect: function (id) {
+        $$('studentGrid').hide();
+        $('#calendar').hide();
+        if (id == 'studentGrid') {
+          $$('studentGrid').show();
+        } else if (id == 'calendar') {
+          $('#calendar').show();
+        }
       },
     },
   };
-  const initUI = () => {
-    webix.ui(sidebar).show();
-  };
-  return { initUI };
+  return { sidebar };
 })();
