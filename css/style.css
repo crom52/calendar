@@ -5,9 +5,9 @@
     background-color:#eeeee8;
 }   */
 
-/* .webix_column .webix_row_select {
+.webix_column .webix_row_select {
     background-color:#f7f6d4 !important;      
-} */
+}
 
 .webix_table_checkbox{
     pointer-events: none;
