@@ -1,0 +1,42 @@
+/*   .highlight .webix_column>div:nth-child(even){
+    background-color:#f7f7b4
+}
+.highlight .webix_column>div:nth-child(odd){
+    background-color:#eeeee8;
+}   */
+
+/* .webix_column .webix_row_select {
+    background-color:#f7f6d4 !important;      
+} */
+
+.webix_table_checkbox{
+    pointer-events: none;
+}
+
+button.fc-addButton-button.fc-button.fc-button-primary.fc-addButton-button {
+    background-color: #0097cc !important;
+    border-color: #0097cc !important
+}
+div[view_id = "popupAddEventButton"] button {
+    background-color: #0097cc !important;
+}
+
+div[view_id="calendarToolbar"] .webix_el_icon:focus{
+    background-color: transparent !important;
+}
+div[view_id="calendarToolbar"] .webix_icon_button:focus{
+    background-color: transparent !important;
+}
+
+div[view_id="calendarToolbar"] .webix_icon_button:hover{
+    background-color: rgba(0,0,0,.05) !important;
+}
+.fc-h-event{
+    background-color: #0097cc !important;
+}
+div[view_id = "checkboxAllDayEvent"] input {
+    width: 15px ;
+    height: 15px ;
+    margin-top: 10px !important;
+
+}

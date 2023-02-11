@@ -1,12 +1,28 @@
-const Calendar = (() => {
+const CalendarModule = (() => {
   const initCalendar = () => {
-    $('#calendar').fullCalendar({
-      plugins: ['dayGrid'],
-      defaultView: 'month',
-      header: {
-        left: 'prev,next today',
+    $$('rightLayout').addView({
+      id: 'calendar',
+      view: 'template',
+      template: `<div id="calendar"></div>`,
+    });
+
+    var calendarEl = document.getElementById('calendar');
+
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+      selectable: true,
+      initialView: 'dayGridMonth',
+      headerToolbar: {
+        left: 'prev,today,next',
         center: 'title',
-        right: 'dayGridMonth,dayGridWeek,dayGridDay',
+        right: 'dayGridMonth,timeGridWeek,timeGridDay addButton',
+      },
+      customButtons: {
+        addButton: {
+          text: 'Thêm',
+          click: () => {
+            $$('popupAddEvent').show();
+          },
+        },
       },
       events: [
         {
@@ -19,24 +35,9 @@ const Calendar = (() => {
           end: '2023-02-10',
         },
         {
-          id: 999,
-          title: 'Repeating Event',
-          start: '2023-02-09T16:00:00',
-        },
-        {
-          id: 999,
-          title: 'Repeating Event',
-          start: '2023-02-16T16:00:00',
-        },
-        {
           title: 'Conference',
           start: '2023-02-11',
           end: '2023-02-13',
-        },
-        {
-          title: 'Meeting',
-          start: '2023-02-12T10:30:00',
-          end: '2023-02-12T12:30:00',
         },
         {
           title: 'Lunch',
@@ -59,6 +60,22 @@ const Calendar = (() => {
           start: '2023-02-13T07:00:00',
         },
       ],
+    });
+    calendar.render();
+    $$('popupAddEventButton').attachEvent('onItemClick', () => {
+      const event = $$('formAddEvent').getValues();
+      if (!$$('formAddEvent').validate()) return;
+      calendar.addEvent({
+        title: event.eventTitle,
+        start: event.eventTime,
+        allDay: Boolean($$('checkboxAllDayEvent').getValue()),
+      });
+      $$('popupAddEvent').hide();
+      webix.message({
+        text: 'Thêm thành công',
+        type: 'success',
+        expire: 2000,
+      });
     });
   };
 
