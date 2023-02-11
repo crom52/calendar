@@ -67,7 +67,8 @@ const CalendarModule = (() => {
       if (!$$('formAddEvent').validate()) return;
       calendar.addEvent({
         title: event.eventTitle,
-        start: event.eventTime,
+        start: event.eventTimeStart,
+        end: event.eventTimeEnd,
         allDay: Boolean($$('checkboxAllDayEvent').getValue()),
       });
       $$('popupAddEvent').hide();

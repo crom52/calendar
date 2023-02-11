@@ -24,23 +24,44 @@ const PopupAddEvent = (() => {
           {
             cols: [
               {
-                id: 'eventTime',
+                width: 300,
+                id: 'eventTimeStart',
                 view: 'datepicker',
-                name: 'eventTime',
-                label: 'Thời gian',
+                name: 'eventTimeStart',
+                label: 'Bắt đầu',
                 timepicker: true,
                 value: new Date(),
               },
+
               { width: 30 },
               {
-                labelWidth: 60,
+                labelWidth: 80,
                 view: 'checkbox',
                 id: 'checkboxAllDayEvent',
                 customCheckbox: false,
-                label: 'Cả ngày',
+                label: 'Trong ngày',
                 value: false,
+                on: {
+                  onChange: () => {
+                    let isAllDay = $$('checkboxAllDayEvent').getValue();
+                    if (isAllDay == 1) {
+                      $$('eventTimeEnd').disable();
+                    } else {
+                      $$('eventTimeEnd').enable();
+                    }
+                  },
+                },
               },
             ],
+          },
+          {
+            width: 300,
+            id: 'eventTimeEnd',
+            view: 'datepicker',
+            name: 'eventTimeEnd',
+            label: 'Kết thúc',
+            timepicker: true,
+            // value: new Date(),
           },
           {
             id: 'eventContent',
