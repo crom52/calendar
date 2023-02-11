@@ -9,6 +9,12 @@ const PopupAddEvent = (() => {
       width: 800,
       height: 600,
       move: true,
+      on: {
+        onShow: () => {
+          $$('formAddEvent').clear();
+          $$('eventTimeStart').setValue(new Date());
+        },
+      },
       body: {
         view: 'form',
         id: 'formAddEvent',
@@ -85,7 +91,6 @@ const PopupAddEvent = (() => {
                 css: 'webix_danger',
                 on: {
                   onItemClick: () => {
-                    $$('formAddEvent').clear();
                     $$('popupAddEvent').hide();
                   },
                 },
