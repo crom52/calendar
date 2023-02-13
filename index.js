@@ -40,6 +40,7 @@ webix.ready(function () {
     })
     .show();
   CalendarModule.initCalendar();
+  $$('sidebar').select('calendar');
 });
 
 var randomId = () => {
