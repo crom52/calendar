@@ -8,17 +8,18 @@ const PopupShowEvent = (() => {
       position: 'center',
       width: 800,
       move: true,
-      // on: {
-      //   onShow: () => {
-      //     $$('formAddEvent').clear();
-      //     $$('eventTimeStart').setValue(new Date());
-      //   },
-      // },
       body: {
         view: 'form',
         id: 'formShowEvent',
         width: 700,
         elements: [
+          {
+            id: 'showEventId',
+            name: 'showEventId',
+            view: 'text',
+            value: '',
+            hidden: true,
+          },
           {
             disabled: true,
             view: 'text',
@@ -33,7 +34,8 @@ const PopupShowEvent = (() => {
                 width: 300,
                 id: 'showEventTimeStart',
                 view: 'datepicker',
-                name: 'eventTimeStart',
+                name: 'showEventTimeStart',
+                required: true,
                 label: 'Bắt đầu',
                 timepicker: true,
                 value: new Date(),
@@ -47,17 +49,17 @@ const PopupShowEvent = (() => {
                 disabled: true,
                 id: 'showCheckboxAllDayEvent',
                 customCheckbox: false,
-                label: 'Trong ngày',
+                label: 'Cả ngày',
                 value: false,
                 on: {
-                  // onChange: () => {
-                  //   let isAllDay = $$('checkboxAllDayEvent').getValue();
-                  //   if (isAllDay == 1) {
-                  //     $$('eventTimeEnd').disable();
-                  //   } else {
-                  //     $$('eventTimeEnd').enable();
-                  //   }
-                  // },
+                  onChange: () => {
+                    let isAllDay = $$('showCheckboxAllDayEvent').getValue();
+                    if (isAllDay == 1) {
+                      $$('showEventTimeEnd').disable();
+                    } else {
+                      $$('showEventTimeEnd').enable();
+                    }
+                  },
                 },
               },
             ],
@@ -67,7 +69,7 @@ const PopupShowEvent = (() => {
             disabled: true,
             id: 'showEventTimeEnd',
             view: 'datepicker',
-            name: 'eventTimeEnd',
+            name: 'showEventTimeEnd',
             label: 'Kết thúc',
             timepicker: true,
           },
@@ -76,7 +78,7 @@ const PopupShowEvent = (() => {
             disabled: true,
             view: 'textarea',
             label: 'Nội dung',
-            name: 'eventContent',
+            name: 'showEventContent',
             height: 200,
           },
           {
@@ -87,24 +89,21 @@ const PopupShowEvent = (() => {
                 view: 'button',
                 value: 'Chỉnh sửa',
                 css: 'webix_primary',
-                on: {
-                  onItemClick: () => {
-                    let label = $$('popupUpdateEventButton').getValue();
-                    if (label == 'Chỉnh sửa') {
-                      enableEditEvent();
-                      $$('popupUpdateEventButton').setValue('Lưu');
-                    } else {
-                      disableEditEvent();
-                      $$('popupUpdateEventButton').setValue('Chỉnh sửa');
-                    }
-                  },
-                },
               },
               {
                 id: 'popupDeleteEventButton',
                 view: 'button',
                 value: 'Xóa sự kiện',
                 css: 'webix_danger',
+                on: {
+                  onItemClick: async () => {
+                    let confirm = await showDeleteEventConfirm();
+                    console.log(confirm);
+
+                    if (confirm) {
+                    }
+                  },
+                },
               },
               {
                 view: 'button',
@@ -121,7 +120,40 @@ const PopupShowEvent = (() => {
         ],
       },
     })
-    .show();
+    .hide();
+
+  const showUpdateEventConfirm = async () => {
+    let rs;
+    await webix
+      .confirm({
+        ok: 'Xác nhận',
+        cancel: 'Hủy',
+        text: 'Bạn có muốn cập nhật sự kiện không ?',
+      })
+      .then(function (result) {
+        rs = result;
+      })
+      .fail(function () {
+        rs = false;
+      });
+    return rs;
+  };
+  const showDeleteEventConfirm = async () => {
+    let rs;
+    await webix
+      .confirm({
+        ok: 'Xác nhận',
+        cancel: 'Hủy',
+        text: 'Bạn có chắc muốn xóa sự kiện?',
+      })
+      .then(function (result) {
+        rs = result;
+      })
+      .fail(function () {
+        rs = false;
+      });
+    return rs;
+  };
 
   const enableEditEvent = () => {
     let fields = [
@@ -151,5 +183,8 @@ const PopupShowEvent = (() => {
   };
   return {
     initPopup,
+    showUpdateEventConfirm,
+    disableEditEvent,
+    enableEditEvent,
   };
 })();

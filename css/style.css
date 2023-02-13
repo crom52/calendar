@@ -42,3 +42,9 @@ div[view_id = "checkboxAllDayEvent"] input {
 div[view_id = "calendar"] {
     overflow: auto;
 }
+.webix_el_box .webix_disabled_box textarea {
+    background-color:#fcfcfc !important;
+}
+.webix_inp_label, .webix_disabled_box .webix_inp_static{
+    color: #475466 !important
+}

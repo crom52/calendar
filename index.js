@@ -40,3 +40,7 @@ webix.ready(function () {
     .show();
   CalendarModule.initCalendar();
 });
+
+var randomId = () => {
+  return Math.random().toString().slice(2, 15);
+};

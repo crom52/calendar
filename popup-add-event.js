@@ -37,6 +37,7 @@ const PopupAddEvent = (() => {
                 label: 'Bắt đầu',
                 timepicker: true,
                 value: new Date(),
+                required: true,
               },
 
               { width: 30 },
@@ -45,7 +46,7 @@ const PopupAddEvent = (() => {
                 view: 'checkbox',
                 id: 'checkboxAllDayEvent',
                 customCheckbox: false,
-                label: 'Trong ngày',
+                label: 'Cả ngày',
                 value: false,
                 on: {
                   onChange: () => {
