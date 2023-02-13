@@ -80,10 +80,9 @@ const CalendarModule = (() => {
         id: randomId(),
         title: event.eventTitle,
         start: event.eventTimeStart,
-        end: event.eventTimeEnd || new Date(),
+        end: event.eventTimeEnd || null,
         allDay: Boolean($$('checkboxAllDayEvent').getValue()) || false,
         content: $$('showEventContent').getValue() || '',
-        hasEnd: event.eventTimeEnd ? true : false,
       });
       calendar.render();
       $$('popupAddEvent').hide();
@@ -111,27 +110,44 @@ const CalendarModule = (() => {
       });
     };
 
+    const attachOnClickToButtonDeleteEvent = () => {
+      $$('popupDeleteEventButton').attachEvent('onItemClick', async () => {
+        let confirm = await PopupShowEvent.showDeleteEventConfirm();
+        if (!confirm) return;
+        removeEvent();
+        $$('popupShowEvent').hide();
+      });
+    };
+
+    const removeEvent = () => {
+      let oldEventData = $$('formShowEvent').getValues();
+      let oldEvent = calendar.getEventById(oldEventData.showEventId);
+      oldEvent.remove();
+    };
+
     const updateEventOnScheduler = () => {
-      let eventData = $$('formShowEvent').getValues();
-      let eventOnCalendar = calendar.getEventById(eventData.showEventId);
-      if (!eventData || !eventOnCalendar) return;
-      console.log(eventOnCalendar);
-      eventOnCalendar._def.title = eventData.showEventTitle;
-      eventOnCalendar._def.allDay =
-        Boolean($$('checkboxAllDayEvent').getValue()) || false;
-      eventOnCalendar._instance.range.start = eventData.showEventTimeStart;
-      eventOnCalendar._instance.range.end = eventData.showEventTimeEnd || null;
-      eventOnCalendar._def.extendedProps.content = eventData.eventContent || '';
-      eventOnCalendar._def.hasEnd = eventData.showEventContent ? true : false;
-      calendar.render();
+      let oldEventData = $$('formShowEvent').getValues();
+      let oldEvent = calendar.getEventById(oldEventData.showEventId);
+      if (!oldEventData || !oldEvent || !$$('formShowEvent').validate()) return;
+      let clone = {
+        id: oldEventData.showEventId,
+        title: oldEventData.showEventTitle,
+        start: oldEventData.showEventTimeStart,
+        end: oldEventData.showEventTimeEnd || null,
+        allDay: Boolean($$('showCheckboxAllDayEvent').getValue()) || false,
+        content: oldEventData.showEventContent || '',
+      };
+      oldEvent.remove();
+      calendar.addEvent(clone);
+
       $$('popupShowEvent').hide();
     };
 
     attachOnClickToButtonEditEvent();
+    attachOnClickToButtonDeleteEvent();
   };
 
   const showPopupEventInfo = (info) => {
-    console.log(info.event);
     let { title, hasEnd, publicId, allDay } = info.event._def;
     let { start, end } = info.event._instance.range;
     let { content } = info.event._def.extendedProps;

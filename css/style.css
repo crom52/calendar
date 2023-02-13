@@ -48,3 +48,6 @@ div[view_id = "calendar"] {
 .webix_inp_label, .webix_disabled_box .webix_inp_static{
     color: #475466 !important
 }
+div[view_id="labelShowEvent"], div[view_id = "labelAddEvent"] {
+    padding-left: 48%
+}

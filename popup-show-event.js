@@ -3,10 +3,34 @@ const PopupShowEvent = (() => {
     .ui({
       view: 'window',
       id: 'popupShowEvent',
-      head: 'Sự kiện',
+      on: {
+        onShow: () => {
+          disableEditEvent();
+        },
+        onKeyPress: (code, event) => {
+          if (code == 27) {
+            $$('popupShowEvent').hide();
+          }
+        },
+      },
+      head: {
+        view: 'toolbar',
+        elements: [
+          { id: 'labelShowEvent', view: 'label', label: 'Sự kiện' },
+          {
+            view: 'icon',
+            icon: 'wxi-close',
+            on: {
+              onItemClick: () => {
+                $$('popupShowEvent').hide();
+              },
+            },
+          },
+        ],
+      },
+      resize: true,
       modal: true,
       position: 'center',
-      width: 800,
       move: true,
       body: {
         view: 'form',
@@ -96,25 +120,6 @@ const PopupShowEvent = (() => {
                 view: 'button',
                 value: 'Xóa sự kiện',
                 css: 'webix_danger',
-                on: {
-                  onItemClick: async () => {
-                    let confirm = await showDeleteEventConfirm();
-                    console.log(confirm);
-
-                    if (confirm) {
-                    }
-                  },
-                },
-              },
-              {
-                view: 'button',
-                value: 'Đóng',
-                css: 'webix_secondary',
-                on: {
-                  onItemClick: () => {
-                    $$('popupShowEvent').hide();
-                  },
-                },
               },
             ],
           },
@@ -172,6 +177,7 @@ const PopupShowEvent = (() => {
     if (isAllDay == 1) {
       $$('showEventTimeEnd').disable();
     }
+    $$('popupUpdateEventButton').setValue('Lưu');
   };
   const disableEditEvent = () => {
     let fields = [
@@ -185,10 +191,12 @@ const PopupShowEvent = (() => {
       e.disable();
       e.refresh();
     });
+    $$('popupUpdateEventButton').setValue('Chỉnh sửa');
   };
   return {
     initPopup,
     showUpdateEventConfirm,
+    showDeleteEventConfirm,
     disableEditEvent,
     enableEditEvent,
   };

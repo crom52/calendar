@@ -3,16 +3,35 @@ const PopupAddEvent = (() => {
     .ui({
       view: 'window',
       id: 'popupAddEvent',
-      head: 'Tạo mới',
+      head: {
+        view: 'toolbar',
+        elements: [
+          { id: 'labelAddEvent', view: 'label', label: 'Thêm sự kiện' },
+          {
+            view: 'icon',
+            icon: 'wxi-close',
+            on: {
+              onItemClick: () => {
+                $$('popupAddEvent').hide();
+              },
+            },
+          },
+        ],
+      },
+      resize: true,
       modal: true,
       position: 'center',
-      width: 800,
-      //   height: 600,
       move: true,
       on: {
         onShow: () => {
           $$('formAddEvent').clear();
           $$('eventTimeStart').setValue(new Date());
+        },
+        onKeyPress: (code, event) => {
+          console.log(code, event);
+          if (code == 27) {
+            $$('popupAddEvent').hide();
+          }
         },
       },
       body: {
@@ -86,16 +105,6 @@ const PopupAddEvent = (() => {
                 view: 'button',
                 value: 'Thêm',
                 css: 'webix_primary',
-              },
-              {
-                view: 'button',
-                value: 'Hủy',
-                css: 'webix_danger',
-                on: {
-                  onItemClick: () => {
-                    $$('popupAddEvent').hide();
-                  },
-                },
               },
             ],
           },

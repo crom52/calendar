@@ -44,3 +44,12 @@ webix.ready(function () {
 var randomId = () => {
   return Math.random().toString().slice(2, 15);
 };
+$(document).keyup(function (action) {
+  if (action.key === 'Escape') {
+    [$$('popupShowEvent'), $$('popupAddEvent')].forEach((popup) => {
+      if (popup.isVisible()) {
+        popup.hide();
+      }
+    });
+  }
+});
