@@ -53,6 +53,7 @@ const PopupAddEvent = (() => {
                     let isAllDay = $$('checkboxAllDayEvent').getValue();
                     if (isAllDay == 1) {
                       $$('eventTimeEnd').disable();
+                      $$('eventTimeEnd').setValue(null);
                     } else {
                       $$('eventTimeEnd').enable();
                     }
