@@ -74,8 +74,6 @@ const CalendarModule = (() => {
     calendar.render();
     $$('popupAddEventButton').attachEvent('onItemClick', () => {
       const event = $$('formAddEvent').getValues();
-      console.log(event.eventTimeStart);
-      console.log(event.eventTimeEnd);
       if (!$$('formAddEvent').validate()) return;
       calendar.addEvent({
         id: randomId(),
@@ -101,7 +99,6 @@ const CalendarModule = (() => {
           $$('popupUpdateEventButton').setValue('Lưu');
         } else if (label == 'Lưu') {
           let confirm = await PopupShowEvent.showUpdateEventConfirm();
-          console.log(confirm);
           if (confirm) {
             updateEventOnScheduler();
             $$('popupUpdateEventButton').setValue('Chỉnh sửa');

@@ -29,7 +29,6 @@ const PopupAddEvent = (() => {
           $$('eventTimeStart').setValue(new Date());
         },
         onKeyPress: (code, event) => {
-          console.log(code, event);
           if (code == 27) {
             $$('popupAddEvent').hide();
           }
