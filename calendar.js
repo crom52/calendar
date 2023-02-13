@@ -80,11 +80,12 @@ const CalendarModule = (() => {
         id: randomId(),
         title: event.eventTitle,
         start: event.eventTimeStart,
-        end: event.eventTimeEnd || null,
+        end: event.eventTimeEnd || new Date(),
         allDay: Boolean($$('checkboxAllDayEvent').getValue()) || false,
         content: $$('showEventContent').getValue() || '',
         hasEnd: event.eventTimeEnd ? true : false,
       });
+      calendar.render();
       $$('popupAddEvent').hide();
       webix.message({
         text: 'Thêm thành công',
@@ -131,7 +132,7 @@ const CalendarModule = (() => {
 
   const showPopupEventInfo = (info) => {
     console.log(info.event);
-    let { title, hasEnd, publicId } = info.event._def;
+    let { title, hasEnd, publicId, allDay } = info.event._def;
     let { start, end } = info.event._instance.range;
     let { content } = info.event._def.extendedProps;
     $$('showEventId').setValue(publicId);
@@ -140,11 +141,7 @@ const CalendarModule = (() => {
     $$('showEventTimeStart').setValue(start || null);
     hasEnd ? $$('showEventTimeEnd').setValue(end || null) : null;
     $$('showEventContent').setValue(content || '');
-    if (start && end) {
-      $$('showCheckboxAllDayEvent').setValue(false);
-    } else {
-      $$('showCheckboxAllDayEvent').setValue(true);
-    }
+    $$('showCheckboxAllDayEvent').setValue(allDay);
 
     $$('popupShowEvent').show();
   };

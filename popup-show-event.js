@@ -167,6 +167,10 @@ const PopupShowEvent = (() => {
       e.enable();
       e.refresh();
     });
+    let isAllDay = $$('showCheckboxAllDayEvent').getValue();
+    if (isAllDay == 1) {
+      $$('showEventTimeEnd').disable();
+    }
   };
   const disableEditEvent = () => {
     let fields = [
