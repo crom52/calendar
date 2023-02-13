@@ -72,9 +72,11 @@ const CalendarModule = (() => {
     });
 
     calendar.render();
-    $$('popupAddEventButton').attachEvent('onItemClick', () => {
+    $$('popupAddEventButton').attachEvent('onItemClick', async () => {
       const event = $$('formAddEvent').getValues();
-      if (!$$('formAddEvent').validate()) return;
+      if (!$$('formAddEvent').validate() || !event) return;
+      if (!validateStartEndDate(event.eventTimeStart, event.eventTimeEnd))
+        return;
       calendar.addEvent({
         id: randomId(),
         title: event.eventTitle,
@@ -83,6 +85,7 @@ const CalendarModule = (() => {
         allDay: Boolean($$('checkboxAllDayEvent').getValue()) || false,
         content: $$('showEventContent').getValue() || '',
       });
+
       calendar.render();
       $$('popupAddEvent').hide();
       webix.message({
@@ -98,6 +101,11 @@ const CalendarModule = (() => {
           PopupShowEvent.enableEditEvent();
           $$('popupUpdateEventButton').setValue('Lưu');
         } else if (label == 'Lưu') {
+          let oldEventData = $$('formShowEvent').getValues();
+          let start = oldEventData.showEventTimeStart;
+          let end = oldEventData.showEventTimeEnd;
+          if (!validateStartEndDate(start, end)) return;
+
           let confirm = await PopupShowEvent.showUpdateEventConfirm();
           if (confirm) {
             updateEventOnScheduler();
@@ -130,7 +138,7 @@ const CalendarModule = (() => {
       let clone = {
         id: oldEventData.showEventId,
         title: oldEventData.showEventTitle,
-        start: oldEventData.showEventTimeStart,
+        start: oldEventData.showEventTimeEnd,
         end: oldEventData.showEventTimeEnd || null,
         allDay: Boolean($$('showCheckboxAllDayEvent').getValue()) || false,
         content: oldEventData.showEventContent || '',
@@ -159,7 +167,16 @@ const CalendarModule = (() => {
 
     $$('popupShowEvent').show();
   };
-
+  const validateStartEndDate = (start, end) => {
+    if (start && end && end.getTime() < start.getTime()) {
+      webix.alert({
+        text: 'Ngày kết thúc phải lớn hơn ngày bắt đầu',
+        type: 'alert-warning',
+      });
+      return false;
+    }
+    return true;
+  };
   return {
     initCalendar,
   };
