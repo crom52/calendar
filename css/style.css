@@ -51,3 +51,11 @@ div[view_id = "calendar"] {
 div[view_id="labelShowEvent"], div[view_id = "labelAddEvent"] {
     padding-left: 48%
 }
+.fc-prev-button,.fc-next-button  {
+    background-color: #0097cc !important;
+    border-color: #0097cc !important;
+}
+.fc-today-button {
+    background-color: #04AA6D !important;
+    border-color: #04AA6D !important;
+}

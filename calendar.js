@@ -17,9 +17,10 @@ const CalendarModule = (() => {
       selectable: true,
       initialView: 'dayGridMonth',
       headerToolbar: {
-        left: 'prev,today,next',
+        left: 'prev today next',
         center: 'title',
-        right: 'dayGridMonth,timeGridWeek,timeGridDay addButton',
+        // right: 'dayGridMonth,timeGridWeek,timeGridDay addButton',
+        right: 'addButton',
       },
       customButtons: {
         addButton: {
