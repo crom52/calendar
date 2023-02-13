@@ -9,14 +9,15 @@ webix.ready(function () {
           padding: 3,
           elements: [
             {
+              id: 'sidebarMenuIcon',
               view: 'icon',
               icon: 'mdi mdi-menu',
               click: function () {
                 $$('sidebar').toggle();
               },
             },
-            { view: 'label', label: 'Quản lý' },
-            {},
+            { view: 'label', label: 'Quản lý', id: 'sidebarLabel' },
+            // {},
             // { view: 'icon', icon: 'mdi mdi-comment', badge: 4 },
             // { view: 'icon', icon: 'mdi mdi-bell', badge: 10 },
           ],

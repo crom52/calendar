@@ -8,6 +8,7 @@ const PopupAddEvent = (() => {
         elements: [
           { id: 'labelAddEvent', view: 'label', label: 'Thêm sự kiện' },
           {
+            id: 'closeAddEventButton',
             view: 'icon',
             icon: 'wxi-close',
             on: {
@@ -52,6 +53,7 @@ const PopupAddEvent = (() => {
                 width: 300,
                 id: 'eventTimeStart',
                 view: 'datepicker',
+                format: '%m/%d/%Y',
                 name: 'eventTimeStart',
                 label: 'Bắt đầu',
                 timepicker: true,
@@ -85,6 +87,7 @@ const PopupAddEvent = (() => {
             width: 300,
             id: 'eventTimeEnd',
             view: 'datepicker',
+            format: '%m/%d/%Y',
             name: 'eventTimeEnd',
             label: 'Kết thúc',
             timepicker: true,

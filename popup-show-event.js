@@ -18,6 +18,7 @@ const PopupShowEvent = (() => {
         elements: [
           { id: 'labelShowEvent', view: 'label', label: 'Sự kiện' },
           {
+            id: 'closeShowEventButton',
             view: 'icon',
             icon: 'wxi-close',
             on: {
@@ -58,6 +59,7 @@ const PopupShowEvent = (() => {
                 width: 300,
                 id: 'showEventTimeStart',
                 view: 'datepicker',
+                format: '%m/%d/%Y',
                 name: 'showEventTimeStart',
                 required: true,
                 label: 'Bắt đầu',
@@ -94,6 +96,7 @@ const PopupShowEvent = (() => {
             disabled: true,
             id: 'showEventTimeEnd',
             view: 'datepicker',
+            format: '%m/%d/%Y',
             name: 'showEventTimeEnd',
             label: 'Kết thúc',
             timepicker: true,
