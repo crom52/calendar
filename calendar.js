@@ -1,9 +1,14 @@
 const CalendarModule = (() => {
   const initCalendar = () => {
     $$('rightLayout').addView({
-      id: 'calendar',
-      view: 'template',
-      template: `<div id="calendar"></div>`,
+      view: 'scrollview',
+      id: 'scrollviewCalendar',
+      scroll: 'xy',
+      body: {
+        id: 'calendar',
+        view: 'template',
+        template: `<div id="calendar"></div>`,
+      },
     });
 
     var calendarEl = document.getElementById('calendar');

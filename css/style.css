@@ -38,5 +38,7 @@ div[view_id = "checkboxAllDayEvent"] input {
     width: 15px ;
     height: 15px ;
     margin-top: 10px !important;
-
+}
+div[view_id = "calendar"] {
+    overflow: auto;
 }

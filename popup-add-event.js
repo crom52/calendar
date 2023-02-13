@@ -7,7 +7,7 @@ const PopupAddEvent = (() => {
       modal: true,
       position: 'center',
       width: 800,
-      height: 600,
+      //   height: 600,
       move: true,
       on: {
         onShow: () => {
